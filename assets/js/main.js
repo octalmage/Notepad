@@ -15,3 +15,31 @@ var win = gui.Window.get();
 
 //Show the window when the app opens.
 win.show();
+
+//Dom ready!
+$(document).on("ready", function()
+{
+    //Focus the window.
+    win.focus();
+    
+    //Focus our textarea.
+    $("#mainText").focus();
+    
+    //Close button.
+    $("#titlebarClose").on("click", function()
+    {
+        win.close();
+    });
+    
+    //Maximize button.
+    $("#titlebarMaximize").on("click", function()
+    {
+        win.maximize();
+    });
+    
+    //Minimize button.
+    $("#titlebarMinimize").on("click", function()
+    {
+        win.minimize();
+    });
+});
