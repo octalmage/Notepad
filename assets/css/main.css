@@ -31,10 +31,10 @@ body
 
 #titlebar
 {
+    position: absolute;
     background-color: #2639e9;
     background-image: url("../img/titlebar/titlebar.png");
     background-repeat: repeat-x;
-    position: absolute;
     top: 0px;
     left: 0px;
     width: 100%;
