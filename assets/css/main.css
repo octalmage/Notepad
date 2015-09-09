@@ -40,4 +40,24 @@ body
     width: 100%;
     height: 30px;
     -webkit-app-region: drag;
+
+#titlebarClose
+{
+    position: absolute;
+    top: 6px;
+    right: 6px;
+}
+
+#titlebarMaximize
+{
+    position: absolute;
+    top: 6px;
+    right: 29px;
+}
+
+#titlebarMinimize
+{
+    position: absolute;
+    top: 6px;
+    right: 52px;
 }
