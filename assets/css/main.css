@@ -40,6 +40,28 @@ body
     width: 100%;
     height: 30px;
     -webkit-app-region: drag;
+}
+
+#titlebarTitle
+{
+    position: absolute;
+    display: inline-block;
+    font-size: 14px;
+    font-family: Tahoma, Geneva, sans-serif;
+    letter-spacing: 0.5px;
+    color: white;
+    left: 25px;
+    top: 8px;
+    text-shadow: 1px 1px #000;
+     -webkit-user-select: none;
+}
+
+#titlebarIcon
+{
+    position: absolute;
+    top: 8px;
+    left: 6px;
+}
 
 #titlebarClose
 {
