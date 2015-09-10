@@ -11,7 +11,7 @@ body
 #mainText
 {
     position: absolute;
-    top: 31px;
+    top: 51px;
     left: 5px;
     bottom: 5px;
     right: 5px;
@@ -85,4 +85,10 @@ body
     top: 6px;
     right: 52px;
     cursor: pointer;
+}.menubarItem:hover
+{
+    color: #fefefe;
+    background-color: #3068c2;
 }
+
+
