@@ -13,6 +13,16 @@ var gui = require("nw.gui");
 //Get the current window.
 var win = gui.Window.get();
 
+if (process.platform === "darwin")
+{
+	var nativeMenuBar = new gui.Menu(
+	{
+		type: "menubar"
+	});
+	nativeMenuBar.createMacBuiltin("Notepad");
+	win.menu = nativeMenuBar;
+}
+
 //Show the window when the app opens.
 win.show();
 
