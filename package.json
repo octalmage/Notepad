@@ -1,9 +1,11 @@
 {
-  "name": "notepad",
-  "version": "0.0.2",
-  "main": "index.html",
-  "window": {
-    "frame": false,
-    "toolbar": false
-  }
+	"name": "notepad",
+	"version": "0.0.2",
+	"main": "index.html",
+	"window":
+	{
+		"frame": false,
+		"toolbar": false
+	},
+	"single-instance": false
 }
