@@ -13,6 +13,9 @@ var gui = require("nw.gui");
 //Get the current window.
 var win = gui.Window.get();
 
+//Get screen size.
+var screen = gui.Screen.Init();
+
 if (process.platform === "darwin")
 {
 	var nativeMenuBar = new gui.Menu(
