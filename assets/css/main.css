@@ -99,6 +99,7 @@ body
     font-size: 12px;
     font-weight: 100;
     box-sizing: border-box;
+    -webkit-user-select: none;
 }
 
 .menubarItem
@@ -106,7 +107,6 @@ body
     padding: 2px 4px 2px 4px;
     color: #000;
     display: inline-block;
-    -webkit-user-select: none;
     cursor: pointer;
 }
 
