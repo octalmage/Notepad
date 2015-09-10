@@ -47,7 +47,21 @@ $(document).on("ready", function()
     //Maximize button.
     $("#titlebarMaximize").on("click", function()
     {
-        win.maximize();
+        //Unmaximize if window is already maximized.
+        if (win.height === screen.availHeight && win.width === screen.availWidth)
+        {
+            win.unmaximize();
+            
+            //Switch to maximize button.
+            $("#titlebarMaximize img").attr("src", "assets/img/titlebar/maximize.png");
+        }
+        else 
+        {
+            win.maximize();
+            
+            //Switch to unmaximize button.
+            $("#titlebarMaximize img").attr("src", "assets/img/titlebar/unmaximize.png");
+        }
     });
     
     //Minimize button.
