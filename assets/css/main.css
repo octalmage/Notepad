@@ -85,7 +85,33 @@ body
     top: 6px;
     right: 52px;
     cursor: pointer;
-}.menubarItem:hover
+}
+
+/* Menubar */
+
+#menubar
+{
+    position: absolute;
+    top: 31px;
+    left: 5px;
+    background-color: #ece9d8;
+    height: 20px;
+    width: calc(100% - 9px);
+    font-size: 12px;
+    font-weight: 100;
+    box-sizing: border-box;
+}
+
+.menubarItem
+{
+    padding: 2px 4px 2px 4px;
+    color: #000;
+    display: inline-block;
+    -webkit-user-select: none;
+    cursor: pointer;
+}
+
+.menubarItem:hover
 {
     color: #fefefe;
     background-color: #3068c2;
