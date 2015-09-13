@@ -55,7 +55,13 @@ $(document).on("ready", function()
     {
         win.minimize();
     });
+	
+	$("#titlebar").on("dblclick", function()
+	{
+		toggleMaximize();
+	});
 });
+
 function toggleMaximize()
 {
 	//Unmaximize if window is already maximized.
