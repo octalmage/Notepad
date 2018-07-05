@@ -10,40 +10,65 @@
 const { remote } = require('electron');
 const win = remote.getCurrentWindow();
 
-//Dom ready!
-$(document).on('ready', function()
-{
-    //Focus our textarea.
-    $('#mainText').focus();
+const Elm = require('./elm.js');
 
-    //Close button.
-    $('#titlebarClose').on('click', function()
-    {
-        win.close();
-    });
+// get a reference to the div where we will show our UI
+let container = document.getElementById('container');
 
-    //Maximize button.
-    $('#titlebarMaximize').on('click', function()
-    {
-        toggleMaximize();
-    });
+// start the elm app in the container
+// and keep a reference for communicating with the app
+let app = Elm.Main.embed(container);
 
-    //Minimize button.
-    $('#titlebarMinimize').on('click', function()
-    {
-        win.minimize();
-    });
 
-	$('#titlebar').on('dblclick', function()
-	{
-		toggleMaximize();
-	});
-
-	$('#fileMenu').on('click', function() {
-		document.getElementById('myDropdown').classList.toggle('show');
-	});
+app.ports.windowEvents.subscribe(function(button) {
+  switch(button) {
+    case "close":
+      win.close();
+      break;
+    case "minimize":
+      win.minimize();
+      break;
+    case "maximize":
+      toggleMaximize();
+      app.ports.maximizeStatus.send(win.isMaximized());
+      break;
+  }
 });
 
+//Dom ready!
+// $(document).on('ready', function()
+// {
+//     //Focus our textarea.
+//     $('#mainText').focus();
+//
+//     //Close button.
+//     $('#titlebarClose').on('click', function()
+//     {
+//         win.close();
+//     });
+//
+//     //Maximize button.
+//     $('#titlebarMaximize').on('click', function()
+//     {
+//         toggleMaximize();
+//     });
+//
+//     //Minimize button.
+//     $('#titlebarMinimize').on('click', function()
+//     {
+//         win.minimize();
+//     });
+//
+// 	$('#titlebar').on('dblclick', function()
+// 	{
+// 		toggleMaximize();
+// 	});
+//
+// 	$('#fileMenu').on('click', function() {
+// 		document.getElementById('myDropdown').classList.toggle('show');
+// 	});
+// });
+//
 function toggleMaximize()
 {
 	// Unmaximize if window is already maximized.
@@ -52,27 +77,27 @@ function toggleMaximize()
 		win.unmaximize();
 
 		// Switch to maximize button.
-		$('#titlebarMaximize img').attr('src', 'assets/img/titlebar/maximize.png');
+		// $('#titlebarMaximize img').attr('src', 'assets/img/titlebar/maximize.png');
 	}
 	else
 	{
 		win.maximize();
 
 		// Switch to unmaximize button.
-		$('#titlebarMaximize img').attr('src', 'assets/img/titlebar/unmaximize.png');
+		// $('#titlebarMaximize img').attr('src', 'assets/img/titlebar/unmaximize.png');
 	}
 }
-
-window.onclick = function(event) {
-  if (!event.target.matches('.menubarItem')) {
-
-    var dropdowns = document.getElementsByClassName('dropdown-content');
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
-      }
-    }
-  }
-}
+//
+// window.onclick = function(event) {
+//   if (!event.target.matches('.menubarItem')) {
+//
+//     var dropdowns = document.getElementsByClassName('dropdown-content');
+//     var i;
+//     for (i = 0; i < dropdowns.length; i++) {
+//       var openDropdown = dropdowns[i];
+//       if (openDropdown.classList.contains('show')) {
+//         openDropdown.classList.remove('show');
+//       }
+//     }
+//   }
+// }
