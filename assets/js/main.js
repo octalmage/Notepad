@@ -1,82 +1,78 @@
 /*
- *  _   _       _                       _ 
+ *  _   _       _                       _
  * | \ | | ___ | |_ ___ _ __   __ _  __| |
  * |  \| |/ _ \| __/ _ \ '_ \ / _` |/ _` |
  * | |\  | (_) | ||  __/ |_) | (_| | (_| |
  * |_| \_|\___/ \__\___| .__/ \__,_|\__,_|
- *                     |_|                
+ *                     |_|
  * By: Jason Stallings
  */
-
-var gui = require("nw.gui");
-
-//Get the current window.
-var win = gui.Window.get();
-
-//Get screen size.
-var screen = gui.Screen.Init();
-
-if (process.platform === "darwin")
-{
-	var nativeMenuBar = new gui.Menu(
-	{
-		type: "menubar"
-	});
-	nativeMenuBar.createMacBuiltin("Notepad");
-	win.menu = nativeMenuBar;
-}
-
-//Show the window when the app opens.
-win.show();
+const { remote } = require('electron');
+const win = remote.getCurrentWindow();
 
 //Dom ready!
-$(document).on("ready", function()
+$(document).on('ready', function()
 {
-    //Focus the window.
-    win.focus();
-    
     //Focus our textarea.
-    $("#mainText").focus();
-    
+    $('#mainText').focus();
+
     //Close button.
-    $("#titlebarClose").on("click", function()
+    $('#titlebarClose').on('click', function()
     {
         win.close();
     });
-    
+
     //Maximize button.
-    $("#titlebarMaximize").on("click", function()
+    $('#titlebarMaximize').on('click', function()
     {
         toggleMaximize();
     });
-    
+
     //Minimize button.
-    $("#titlebarMinimize").on("click", function()
+    $('#titlebarMinimize').on('click', function()
     {
         win.minimize();
     });
-	
-	$("#titlebar").on("dblclick", function()
+
+	$('#titlebar').on('dblclick', function()
 	{
 		toggleMaximize();
+	});
+
+	$('#fileMenu').on('click', function() {
+		document.getElementById('myDropdown').classList.toggle('show');
 	});
 });
 
 function toggleMaximize()
 {
-	//Unmaximize if window is already maximized.
-	if (win.height === screen.availHeight && win.width === screen.availWidth)
+	// Unmaximize if window is already maximized.
+	if (win.isMaximized())
 	{
 		win.unmaximize();
-		
-		//Switch to maximize button.
-		$("#titlebarMaximize img").attr("src", "assets/img/titlebar/maximize.png");
+
+		// Switch to maximize button.
+		$('#titlebarMaximize img').attr('src', 'assets/img/titlebar/maximize.png');
 	}
-	else 
+	else
 	{
 		win.maximize();
-		
-		//Switch to unmaximize button.
-		$("#titlebarMaximize img").attr("src", "assets/img/titlebar/unmaximize.png");
+
+		// Switch to unmaximize button.
+		$('#titlebarMaximize img').attr('src', 'assets/img/titlebar/unmaximize.png');
 	}
+}
+
+window.onclick = function(event) {
+  if (!event.target.matches('.menubarItem')) {
+
+    var dropdowns = document.getElementsByClassName('dropdown-content');
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
 }

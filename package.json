@@ -1,11 +1,11 @@
 {
 	"name": "notepad",
-	"version": "0.0.2",
-	"main": "index.html",
-	"window":
-	{
-		"frame": false,
-		"toolbar": false
+	"version": "0.1.0",
+	"main": "main.js",
+	"dependencies": {
+		"electron": "^2.0.4"
 	},
-	"single-instance": false
+	"scripts": {
+		"start": "electron ."
+	}
 }

@@ -2,3 +2,4 @@ node_modules
 *.psd
 .atom-build.json
 build
+elm-stuff
