@@ -15,6 +15,19 @@ main =
         }
 
 
+type Menu
+    = File
+    | Edit
+    | Format
+    | View
+    | Help
+
+
+enumMenu : List Menu
+enumMenu =
+    [ File, Edit, Format, View, Help ]
+
+
 
 -- MODEL
 
@@ -23,12 +36,13 @@ type alias Model =
     { text : String
     , title : String
     , maximized : Bool
+    , selectedMenu : Maybe Menu
     }
 
 
 init : String -> ( Model, Cmd Msg )
 init text =
-    ( Model text "Untitled - Notepad" False
+    ( Model text "Untitled - Notepad" False Nothing
     , Cmd.none
     )
 
@@ -43,6 +57,8 @@ type Msg
     | Minimize
     | Close
     | UpdateMaximize Bool
+    | OpenMenu (Maybe Menu)
+    | ClickedOutside String
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -63,14 +79,42 @@ update msg model =
         UpdateMaximize status ->
             ( { model | maximized = status }, Cmd.none )
 
+        OpenMenu menuItem ->
+            ( { model | selectedMenu = menuItem }, Cmd.none )
+
+        ClickedOutside element ->
+            let
+                dummy =
+                    Debug.log "element" element
+            in
+            ( model, Cmd.none )
+
 
 
 -- VIEW
+-- onClick : msg -> Attribute msg
+-- onClick message =
+--     onWithOptions
+--         "click"
+--         { stopPropagation = True
+--         , preventDefault = False
+--         }
+--         (Decode.succeed message)
+
+
+targetElement : Decode.Decoder String
+targetElement =
+    Decode.at [ "target" ] Decode.string
+
+
+onClickEverywhere : (String -> msg) -> Attribute msg
+onClickEverywhere tagger =
+    on "input" (Decode.map tagger targetElement)
 
 
 view : Model -> Html Msg
 view model =
-    div []
+    div [ onClickEverywhere ClickedOutside ]
         [ div [ id "titlebar" ]
             [ div [ id "titlebarIcon" ]
                 [ img [ src "assets/img/titlebar/icon.png" ] []
@@ -82,14 +126,34 @@ view model =
                 [ img [ src "assets/img/titlebar/close.png" ] []
                 ]
             , div [ id "titlebarMaximize", onClick Maximize ]
-                [ img [ src "assets/img/titlebar/maximize.png" ] []
+                [ img
+                    [ src
+                        (case model.maximized of
+                            True ->
+                                "assets/img/titlebar/unmaximize.png"
+
+                            False ->
+                                "assets/img/titlebar/maximize.png"
+                        )
+                    ]
+                    []
                 ]
             , div [ id "titlebarMinimize", onClick Minimize ]
                 [ img [ src "assets/img/titlebar/minimize.png" ] []
                 ]
             ]
         , div [ id "menubar" ]
-            [ div [ id "fileMenu", class "menubarItem" ] [ text "File" ]
+            [ div [ id "fileMenu", class "menubarItem", onClick (OpenMenu (Just File)) ] [ text "File" ]
+            , div
+                [ classList
+                    [ ( "dropdown-content", True )
+                    , ( "show", model.selectedMenu == Just File )
+                    ]
+                ]
+                [ a [ href "#" ] [ text "New" ]
+                , a [ href "#" ] [ text "Open" ]
+                , a [ href "#" ] [ text "Save" ]
+                ]
             , div [ id "editMenu", class "menubarItem" ] [ text "Edit" ]
             , div [ id "formatMenu", class "menubarItem" ] [ text "Format" ]
             , div [ id "viewMenu", class "menubarItem" ] [ text "View" ]
@@ -109,13 +173,17 @@ subscriptions model =
 
 
 
--- PORTS
-
-
-port windowEvents : String -> Cmd msg
+-- INCOMING PORTS
 
 
 port maximizeStatus : (Bool -> msg) -> Sub msg
+
+
+
+-- OUTGOING PORTS
+
+
+port windowEvents : String -> Cmd msg
 
 
 

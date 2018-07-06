@@ -35,56 +35,16 @@ app.ports.windowEvents.subscribe(function(button) {
   }
 });
 
-//Dom ready!
-// $(document).on('ready', function()
-// {
-//     //Focus our textarea.
-//     $('#mainText').focus();
-//
-//     //Close button.
-//     $('#titlebarClose').on('click', function()
-//     {
-//         win.close();
-//     });
-//
-//     //Maximize button.
-//     $('#titlebarMaximize').on('click', function()
-//     {
-//         toggleMaximize();
-//     });
-//
-//     //Minimize button.
-//     $('#titlebarMinimize').on('click', function()
-//     {
-//         win.minimize();
-//     });
-//
-// 	$('#titlebar').on('dblclick', function()
-// 	{
-// 		toggleMaximize();
-// 	});
-//
-// 	$('#fileMenu').on('click', function() {
-// 		document.getElementById('myDropdown').classList.toggle('show');
-// 	});
-// });
-//
 function toggleMaximize()
 {
 	// Unmaximize if window is already maximized.
 	if (win.isMaximized())
 	{
 		win.unmaximize();
-
-		// Switch to maximize button.
-		// $('#titlebarMaximize img').attr('src', 'assets/img/titlebar/maximize.png');
 	}
 	else
 	{
 		win.maximize();
-
-		// Switch to unmaximize button.
-		// $('#titlebarMaximize img').attr('src', 'assets/img/titlebar/unmaximize.png');
 	}
 }
 //

@@ -6,6 +6,7 @@
 		"electron": "^2.0.4"
 	},
 	"scripts": {
-		"start": "electron ."
+		"start": "electron .",
+		"build": "elm make Main.elm --output elm.js"
 	}
 }
